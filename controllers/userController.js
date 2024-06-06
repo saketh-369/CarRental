@@ -33,7 +33,7 @@ const signup = async( req,res ) => {
     }
 
     const token = generateToken(email);
-    res.send(token)
+    res.send("registered successfully")
     } catch (error) {
         console.log(error);
         res.send(error);
@@ -58,11 +58,12 @@ const signin = async(req,res) => {
         const matchPassword = await bcrypt.compare(password,user.hashPassword);
 
         const token = generateToken(email);
-        res.send(token);
+        
         
         if(!matchPassword){
             return res.send("password incorrect");
         }
+        res.send("Logged in");
 
     } catch (error) {
         console.log(error);

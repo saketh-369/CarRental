@@ -21,7 +21,8 @@ const userSchema = new mongoose.Schema({
     hashPassword : {
         type : String,
         required : true
-    }
+    },
+    
 });
 
 const User = mongoose.model("User", userSchema);
