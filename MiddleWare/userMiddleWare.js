@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ function authenticateUser(req,res,next){
     if(!token){
         return res.sendStatus(401);
     }
-    
+
 
     jwt.verify(token,process.env.SECRET_KEY,(err,user)=>{
         console.log(err);
@@ -23,4 +24,4 @@ function authenticateUser(req,res,next){
     });
 }
 
-export default authenticateUser;
+module.exports = authenticateUser;
