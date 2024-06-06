@@ -33,6 +33,7 @@ const signup = async( req,res ) => {
     }
 
     const token = generateToken(email);
+    res.cookie("token",token);
     res.send("registered successfully")
     } catch (error) {
         console.log(error);
@@ -63,6 +64,7 @@ const signin = async(req,res) => {
         if(!matchPassword){
             return res.send("password incorrect");
         }
+        res.cookie("token",token);
         res.send("Logged in");
 
     } catch (error) {

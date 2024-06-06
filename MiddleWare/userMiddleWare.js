@@ -13,7 +13,7 @@ function authenticateUser(req,res,next){
     }
 
 
-    jwt.verify(token,process.env.SECRET_KEY,(err,user)=>{
+    jwt.verify(token,process.env.SE,(err,user)=>{
         console.log(err);
         if (err) return res.sendStatus(403);
 
