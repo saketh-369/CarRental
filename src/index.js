@@ -13,6 +13,7 @@ app.use("/api/v1", userRouter);
 
 app.use(cookieParser())
 
+
 connectDb();
 
 app.get('/', (req, res) => {

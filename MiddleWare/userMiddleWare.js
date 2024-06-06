@@ -10,6 +10,7 @@ function authenticateUser(req,res,next){
 
     if(!token){
         return res.sendStatus(401);
+        
     }
 
 
