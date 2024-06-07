@@ -3,59 +3,71 @@ const generateToken = require("../utils/generateToken");
 const Admin = require("../models/adminModel.js");
 
 
-const admin = async (req, res) => {
-    const { email, password } = req.body;
-
+const adminsignup = async (req, res) => {
     try {
-
-        const admin = await Admin.findOne({ email });
-
-
-        if (!admin) {
-            return res.status(404).json({ message: "Admin not found" });
-        }
-
-
-        const isMatch = await bcrypt.compare(password, admin.password);
-
-
-        if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-
-        const token = generateToken(admin._id);
-
-
-        res.status(200).json({
-            _id: admin._id,
-            username: admin.username,
-            email: admin.email,
-            token: token,
-        });
-    } catch (error) {
-
-        res.status(500).json({ message: "Server error", error: error.message });
+        
+        const { username, email, password } = req.body;
+        
+    const adminExist = await Admin.findOne({ email });
+    if(adminExist){
+        return res.send("admin already exist");
     }
-};
 
+    
+    const saltRounds = 10;
+    const adminpassword = await bcrypt.hash(password,saltRounds);
+    
+    const newAdmin = new Admin ({
+        username,
+        email,
+        adminpassword
+    })
 
+    const newAdminCreated = await newAdmin.save();
 
-const existingAdmin = await Admin.findOne({ email: 'admin@gmail.com' });
+    console.log(newAdminCreated);
 
-if (!existingAdmin) {
-    const hashedPassword = await bcrypt.hash('123456', 10);
-    const admin = new Admin({
-        username: 'admin',
-        email: 'admin@gmail.com',
-        password: hashedPassword,
-    });
-    await admin.save();
-    console.log('Admin user created');
-} else {
-    console.log('Admin user already exists');
+    if(!newAdmin){
+        return res.send("Admin not created");
+    }
+
+    const token = generateToken(email);
+    res.cookie("token",token);
+    res.send("registered successfully")
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+}
+
+const adminlogin = async (req,res) => {
+    try {
+        const {email, password} = req.body;
+        const admin = await Admin.findOne({email});
+
+        console.log(admin);
+
+        if(!admin){
+            return res.send("admin not exist");
+        }
+        const matchPassword = await bcrypt.compare(password,admin.adminpassword);
+
+        const token = generateToken(email);
+        
+        
+        if(!matchPassword){
+            return res.send("password incorrect");
+        }
+        res.cookie("token",token);
+        res.send("Logged in");
+
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
 }
 
 module.exports = {
-    admin
+    adminsignup,
+    adminlogin
 }
