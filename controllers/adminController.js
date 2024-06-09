@@ -67,6 +67,9 @@ const adminlogin = async (req,res) => {
     }
 }
 
+
+
+
 module.exports = {
     adminsignup,
     adminlogin

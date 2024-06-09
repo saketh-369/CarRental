@@ -58,13 +58,12 @@ const signin = async(req,res) => {
             return res.send("user not exist");
         }
         const matchPassword = await bcrypt.compare(password,user.hashPassword);
-
-        const token = generateToken(email);
-        
-        
         if(!matchPassword){
             return res.send("password incorrect");
         }
+        
+        
+        const token = generateToken(email);
         res.cookie("token",token);
         res.send("Logged in");
 
