@@ -1,4 +1,5 @@
 const Dealer = require("../models/dealerModel");
+const Vehicle = require("../models/vehicleModel");
 
 const dealerDetails = async (req, res) => {
     try {
@@ -28,22 +29,4 @@ const dealerDetails = async (req, res) => {
     }
 };
 
-const getDealerById = async (req, res) => {
-  const dealerId = req.params.id; 
-
-  try {
-      
-      const dealer = await Dealer.findById(dealerId).populate('vehicles');
-
-      if (!dealer) {
-          return res.status(404).json({ error: 'Dealer not found' });
-      }
-
-      res.status(200).json(dealer);
-  } catch (error) {
-      console.error('Error fetching dealer:', error);
-      res.status(500).json({ error: 'Server error' });
-  }
-};
-
-module.exports = { dealerDetails, getDealerById };
+module.exports = { dealerDetails };

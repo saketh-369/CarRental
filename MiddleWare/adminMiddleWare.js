@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
+
 dotenv.config();
 
 function authenticateAdmin(req, res, next) {
@@ -15,7 +16,7 @@ function authenticateAdmin(req, res, next) {
       if (err) return res.sendStatus(403);
       
       req.admin = admin;
-  
+      
       next();
     });
 }

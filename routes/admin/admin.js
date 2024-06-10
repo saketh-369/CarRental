@@ -9,7 +9,7 @@ router.post("/signup",adminController.adminsignup)
 router.post("/login",adminController.adminlogin)
 router.post("/dealer", authenticateAdmin ,dealerController.dealerDetails);
 router.post("/vehiclelist",authenticateAdmin,vehicleListController.updateVehicle);
-
+router.get("/")
 
 
 module.exports = router;
