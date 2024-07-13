@@ -8,12 +8,15 @@ const signup = async( req,res ) => {
     try {
         
         const { firstname, lastname, email, password } = req.body;
+
+        // console.log(req.body);
         
     const userExist = await User.findOne({ email });
     if(userExist){
         return res.send("user already exist");
     }
 
+    
     
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password,saltRounds);
@@ -40,10 +43,7 @@ const signup = async( req,res ) => {
         console.log(error);
         res.send(error);
     }
-
-
-
-    
+   
 };
 
 
@@ -64,8 +64,9 @@ const signin = async(req,res) => {
         
         
         const token = generateToken(email);
-        res.cookie("token",token);
-        res.send("Logged in");
+        // res.cookie("token",token);
+        res.json({ token });
+        // res.send("Logged in");
 
     } catch (error) {
         console.log(error);

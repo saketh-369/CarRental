@@ -12,6 +12,7 @@ function authenticateAdmin(req, res, next) {
     }
     jwt.verify(token, process.env.SE, (err, admin) => {
       
+      
         
       if (err) return res.sendStatus(403);
       

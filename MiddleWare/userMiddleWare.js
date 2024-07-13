@@ -5,7 +5,9 @@ dotenv.config();
 
 function authenticateUser(req, res, next) {
     // console.log(req.cookies);
-    const token = req.cookies.token;
+    const token = req.headers.authorization;
+    
+    
     if (!token) {
       return res.sendStatus(401); 
     }
@@ -15,7 +17,12 @@ function authenticateUser(req, res, next) {
       if (err) return res.sendStatus(403);
       
       req.user = user;
-  
+
+      
+      // getUserData(user?.userID).then((response) => {
+        
+      // });
+
       next();
     });
 }

@@ -29,4 +29,24 @@ const dealerDetails = async (req, res) => {
     }
 };
 
-module.exports = { dealerDetails };
+
+const getDealer = async (req, res) => {
+  try {
+    const dealers = await Dealer.find();
+    const dealerDetail = dealers.map(dealer => ({
+      id: dealer._id,
+      name: dealer.name,
+      email: dealer.email,
+      phone: dealer.phone,
+      address: dealer.address,
+      companyName: dealer.companyName,
+      companyWebsite: dealer.companyWebsite,
+    }));
+    res.status(200).send(dealerDetail);
+  } catch (error) {
+    res.status(500).send({ message: 'Error fetching dealers', error });
+  }
+};
+
+
+module.exports = { dealerDetails , getDealer};
