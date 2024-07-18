@@ -32,8 +32,9 @@ const adminsignup = async (req, res) => {
     }
 
     const token = generateToken(email);
-    res.cookie("token",token);
-    res.send("registered successfully")
+    res.json({ token });
+    // res.cookie("token",token);
+    // res.send("registered successfully")
     } catch (error) {
         console.log(error);
         res.send(error);
@@ -52,14 +53,16 @@ const adminlogin = async (req,res) => {
         }
         const matchPassword = await bcrypt.compare(password,admin.adminpassword);
 
-        const token = generateToken(email);
+        
         
         
         if(!matchPassword){
             return res.send("password incorrect");
         }
-        res.cookie("token",token);
-        res.send("Logged in");
+        const token = generateToken(email);
+        res.json({ token });
+        // res.cookie("token",token);
+        // res.send("Logged in");
 
     } catch (error) {
         console.log(error);

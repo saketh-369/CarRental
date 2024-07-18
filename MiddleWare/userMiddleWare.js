@@ -18,7 +18,6 @@ function authenticateUser(req, res, next) {
       
       req.user = user;
 
-      
       // getUserData(user?.userID).then((response) => {
         
       // });

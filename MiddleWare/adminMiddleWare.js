@@ -6,7 +6,9 @@ dotenv.config();
 
 function authenticateAdmin(req, res, next) {
     // console.log(req.cookies);
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
+    const token = req.headers.authorization;
+    
     if (!token) {
       return res.sendStatus(401); 
     }

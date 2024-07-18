@@ -29,5 +29,27 @@ router.get("/contact")
 router.get("/membership")
 
 
+router.get("/profile", authenticateUser, async (req, res) => {
+  try {
+    const user = req.user;
+    const findUser = await User.findOne({ email: user.data });
+
+    if (!findUser) {
+      return res.status(404).json({ message: "User not found", success: false });
+    }
+
+    res.json({
+      success: true,
+      data: {
+        name: findUser.firstname,
+        email: findUser.email,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Internal server error", success: false });
+  }
+});
+
 
 module.exports = router;
